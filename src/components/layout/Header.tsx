@@ -1,0 +1,7 @@
+import { Link, NavLink } from 'react-router-dom';
+import { UserProfile } from '../../types';
+
+export function Header({ user, onLogout }: { user?: UserProfile; onLogout: () => void }) {
+  const link = ({ isActive }: { isActive: boolean }) => `rounded-full px-4 py-2 text-sm font-semibold ${isActive ? 'bg-sage/15 text-ocean' : 'text-slate-600 hover:bg-slate-100'}`;
+  return <header className="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur"><div className="container-page flex h-20 items-center justify-between gap-4"><Link to="/" className="flex items-center gap-3"><span className="grid h-11 w-11 place-items-center rounded-2xl bg-sage text-xl font-black text-white">N</span><span><b className="block text-ocean">NahGenuss</b><small className="text-slate-500">Regionaler Food-Marketplace</small></span></Link><nav className="hidden items-center gap-2 md:flex"><NavLink className={link} to="/search">Produkte finden</NavLink>{user && <NavLink className={link} to="/listings/new">Anzeige erstellen</NavLink>}{user && <NavLink className={link} to="/member">Mitgliederbereich</NavLink>}</nav><div className="flex items-center gap-2">{user ? <><span className="hidden text-sm text-slate-600 sm:block">Hallo, {user.firstName}</span><button onClick={onLogout} className="btn-ghost px-4 py-2">Logout</button></> : <><Link to="/login" className="btn-ghost px-4 py-2">Login</Link><Link to="/register" className="btn-primary px-4 py-2">Konto erstellen</Link></>}</div></div></header>;
+}
